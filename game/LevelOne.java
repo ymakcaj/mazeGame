@@ -126,7 +126,7 @@ import java.util.ArrayList;
                     player.move(DIRECTION);
                     gameMap.addToMap(player);
                     checkIfPlayerHasReachedItem();
-                    player.reduceHealthLevelBy(1);
+                    player.reduceEnergyLevelBy(1);
                     display.update(keys);
                 } else {
                     display.invalidMovementMessage();
