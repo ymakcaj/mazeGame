@@ -116,5 +116,32 @@ import java.awt.event.KeyListener;
             case KeyEvent.VK_RIGHT:
                 final int DIRECTION = e.getKeyCode();
                 if (gameMap.validateMovement(player, DIRECTION)) {
+                    gameMap.removeFromMap(player);
+                    player.move(DIRECTION);
+                    gameMap.addToMap(player);
+                    checkIfPlayerHasFoundExit();
+                    display.update();
+                } else {
+                    display.invalidMovementMessage();
+                }
+                break;
+            case KeyEvent.VK_F6:
+                Game.isVisibilityMode = !Game.isVisibilityMode;
+                display.update();
+                break;
+            default:
+                break;
+        }
 
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
  }
