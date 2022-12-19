@@ -118,4 +118,43 @@ import static main.MazeGenerator.MazeGenerator.EMPTY_SPACE;
         }
         Collections.shuffle(this.randomY);
     }
+
+
+    /*
+     * Returns the player's postion {@link Position} object using random x and 
+     * y cooordinates. The result is passed to the constructor while creating
+     * {@link GameObject}
+     * 
+     * @return a Position object with random coordinates 
+     */
+    Position getRandomPosition() {
+        return new Position(random_X.remove(0), random_Y.remove(0));
+    }
+
+
+    /**
+     * Returns a boolean value if the player's move is valid or not, i.e. not 
+     * blocked by a wall. We check the character in the direction the player has
+     * pressed is a 'space' that represents 'no wall'.
+     *
+     * @param player    the Player object
+     * @param direction the direction the player wants to move
+     * @return <code>true</code> if the movement is valid, <code>false</code> otherwise
+     */
+    boolean validateMovement(Player player, int direction) {
+        switch (direction) {
+            case Movable.DIRECTION_UP:
+                return (player.getY() > 1 && this.map[player.getY() - 1][player.getX()] == EMPTY_SPACE);
+            case Movable.DIRECTION_DOWN:
+                return (player.getY() < height - 2 && this.map[player.getY() + 1][player.getX()] == EMPTY_SPACE);
+            case Movable.DIRECTION_LEFT:
+                return (player.getX() > 2 && this.map[player.getY()][player.getX() - 2] == EMPTY_SPACE);
+            case Movable.DIRECTION_RIGHT:
+                return (player.getX() < width - 3 && this.map[player.getY()][player.getX() + 2] == EMPTY_SPACE);
+            default:
+                return false;
+        }
+    }
+
+
  }
