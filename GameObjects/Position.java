@@ -55,4 +55,15 @@ public final class Position {
             return this.x == position.x && this.y == position.y;
         }
     }
+
+    /**
+     * Returns a String object representing this Position's coordinates (the 
+     * x and y ints as a string seperated by a comma)
+     *
+     * @return a String representation of this Position's coordinates
+     */
+    @Override
+    public String toString() {
+        return x + ", " + y;
+    }
 }
