@@ -17,7 +17,7 @@ import static main.MazeGenerator.*;
 
 class Display {
 
-    private static final char FOG = '#';
+    private static final char SNOW = '*';
     private final char[][] map;
     private final Player player;
     private final int height;
@@ -56,16 +56,30 @@ class Display {
             System.out.print(new String(displayMap[row]));
             switch (row) {
                 case 2:
-                    System.out.printf("\tKey(s) collected %d/%d\n", LevelOne.NUMBER_OF_KEYS - keys.size(), LevelOne.NUMBER_OF_KEYS);
+                    System.out.printf(
+                        "\tKey(s) collected %d/%d\n", 
+                        LevelOne.NUMBER_OF_KEYS - keys.size(), 
+                        LevelOne.NUMBER_OF_KEYS
+                        );
                     break;
                 case 4:
-                    System.out.printf("\tHint to the nearest Key: %s\n", getNearestKeyHints(keys));
+                    System.out.printf(
+                        "\tHint to the nearest Key: %s\n", 
+                        getNearestKeyHints(keys)
+                        );
                     break;
                 case 6:
-                    System.out.printf("\tVisibility: %d blocks\n", player.getVisibility());
+                    System.out.printf(
+                        "\tVisibility: %d blocks\n", 
+                        player.getVisibility()
+                        );
                     break;
                 case 8:
-                    System.out.printf("\tHealth: %d/%d\n", (player.isDead()) ? 0 : player.getHealthLevel(), Player.INITIAL_HEALTH_LEVEL);
+                    System.out.printf(
+                        "\tHealth: %d/%d\n",
+                        (player.isDead()) ? 0 : player.getHealthLevel(),
+                        Player.INITIAL_HEALTH_LEVEL
+                        );
                     break;
                 default:
                     System.out.println();
@@ -84,6 +98,194 @@ class Display {
     private char[][] createCoveredMap() {
         char[][] coveredMap = new char[height][width];
 
-        // firstly, cover the map w/ @FOG
+        // firstly, cover the map w/ @SNOW
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                coveredMap[i][j] = SNOW;
+            }
+        }
+
+        // then we uncover the player
+        coveredMap[player.getY()][player.getX()] = player.getIcon();
+
+        for (int j = player.getX() - 2; j <= player.getX() + 2; j++) {
+            // adding vistibility two up from the player
+            for (int i = player.getY() - 1; i >= player.getY() - player.getVisibility() * 2 - 1 && i > 0; i--) {
+                coveredMap[i][j] = map[i][j];
+                if (map[i][player.getX()] == HORIZONTAL_WALL) break;                
+            }
+            // then add vistibility going down
+            for (int i = player.getY() + 1; i <= player.getY() + player.getVisibility() * 2 + 1 && i < height; i++) {
+                coveredMap[i][j] = map[i][j];
+                if (map[i][player.getX()] == HORIZONTAL_WALL) break;
+            }
+        }
+
+        for (int i = player.getY() - 1; i <= player.getY() + 1; i++) {
+            // uncovering the map from the player's left
+            for (int j = player.getX() - 1; j >= player.getX() - player.getVisibility() * 4 - 2 && j >= 0; j--) {
+                coveredMap[i][j] = map[i][j];
+                if (map[player.getY()][j] == VERTICAL_WALL) break;
+            }
+            // now from the right
+            for (int j = player.getX() + 1; j <= player.getX() + player.getVisibility() * 4 + 2 && j < width; j++) {
+                coveredMap[i][j] = map[i][j];
+                if (map[player.getY()][j] == VERTICAL_WALL) break;
+            }
+        }
+        return coveredMap;
     }
+
+    /*
+        * Printing the game intro, with names added for personalisation 
+        * (this is printed before L1 starts)
+        */
+
+    void gameIntroMessage() {
+        clearScrean();
+        String[] intros = {"Hello Marcy and Isaac!\n\n",
+                "Rufus, 'R', the maze runner, is trapped in a deadly maze.\n\n",
+                "To escape from the maze, he must find all the keys, 'K', that are scattered in the maze.\n",
+                "After collecting all the keys, the exit, 'E', will appear at the corner of the maze.\n\n",
+                "Rufus's visibility is very limited due to the heavy snow, '*', he couldn't see beyond two steps.\n",
+                "However, there's a torch, '%', hidden somewhere in the maze. It could help to boost Rufus' visibility.\n\n",
+                "And of course, Rufus is just a normal kitten, he couldn't see or walk through the maze walls.\n",
+                "Every movement will cost Rufus a drop of energy. So make your move wisely! (Press the arrow keys to move).\n\n",
+                "Press ENTER to continue... "};
+            for (String intro : intros) {
+                printWithDelay(intro, 40);
+                delay(500);
+            }
+            // we wait for the player to hit enter
+            Scanner s = new Scanner(System.in);
+            String input;
+            do {
+                input = s.nextLine();
+            } while (!input.equals(""));
+    }
+    
+    /*
+     * Printing a winning message after L2 is completed.
+     */
+    void winMessage() {
+        int midHeight = height / 2;
+        int midWidth = width / 2;
+
+        clear(midHeight, midWidth);
+
+        map[midHeight][midWidth - 3] = 'V';
+        map[midHeight][midWidth - 2] = 'I';
+        map[midHeight][midWidth - 1] = 'C';
+        map[midHeight][midWidth] = 'T';
+        map[midHeight][midWidth + 1] = 'O';
+        map[midHeight][midWidth + 2] = 'R';
+        map[midHeight][midWidth + 3] = 'Y';
+        map[midHeight][midWidth + 4] = '!';
+
+        Game.isVisibilityMode = false;
+        update();
+    }
+
+    /*
+     * printing a losing message if the protaganist falls asleep
+     */
+    void loseMessage() {
+        int midHeight = height / 2;
+        int midWidth = width / 2;
+
+        clear(midHeight, midWidth);
+
+        map[midHeight][midWidth - 4] = 'G';
+        map[midHeight][midWidth - 3] = 'A';
+        map[midHeight][midWidth - 2] = 'M';
+        map[midHeight][midWidth - 1] = 'E';
+        map[midHeight][midWidth] = ' ';
+        map[midHeight][midWidth + 1] = 'O';
+        map[midHeight][midWidth + 2] = 'V';
+        map[midHeight][midWidth + 3] = 'E';
+        map[midHeight][midWidth + 4] = 'R';
+        map[midHeight][midWidth + 5] = '!';
+
+        Game.isVisibilityMode = false;
+        update();
+    }
+
+    /*
+     * prints a message after the player has completed L1
+     */
+    void nextLevelMessage() {
+        Game.isVisibilityMode = false;
+        update();
+        delay(500);
+        printWithDelay("\nALL KEYS FOUND! ", 80);
+        delay(500);
+        printWithDelay("BUT...\nWE'RE NOT DONE YET...", 80);
+        delay(800);
+        printWithDelay("\nFIND THE EXIT BEFORE YOUR ENERGY BECOMES ZERO AND RUFUS FALLS ASLEEP!", 70);
+        delay(1000);
+        Game.isVisibilityMode = true;
+    }
+
+    /*
+     * adding an error message for when the player tries to move to somewhere 
+     * out of bounds
+     */
+    void invalidMovementMessage() {
+        System.out.println("Rufus can't jump over the wall of the maze!");
+    }
+
+    /*
+     * prints a given message to the console character by character, with a 
+     * pause between each character
+     * 
+     * @param message - the string to be printed
+     * @param millis - the delay measuered in milliseconds
+     */
+    private void printWithDelay(String message, int millis) {
+        if (message.length() > 0) {
+            for (int i = 0; i < message.length(); i++) {
+                System.out.print(message.charAt(i));
+                delay(millis);
+            }
+        }
+    }
+
+    /*
+     * now we add a method to delay printing by a given number of seconds
+     * 
+     * @param millis - number of milliseconds to delay by
+     */
+    private void delay(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * now we add a method to clear the console
+     */
+    private void clearScrean() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * clears the centre of the console given the centre's coordinates
+     * 
+     * @param midHeight - y coordinate for centre
+     * @param midWidth - x coordinate for centre
+     */
+    private void clear (int midHeight, int midWidth) {
+        for (int i = midHeight - 1; i < midHeight + 1; i++) {
+            for (int j = midWidth - 7; j <= midWidth; j++) {
+                map[i][j] = EMPTY_SPACE;
+            }
+        }
+    }
+
 }
