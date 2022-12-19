@@ -105,7 +105,7 @@ import java.util.ArrayList;
      * If the arrow keys are pressed, the movement is validated first.
      * If the direction of movement is valid (not blocked by any walls), the player icon at the
      * position before moving is first removed from the game map. The player icon is added back
-     * to the game map at the new position after moving. The health level of the player is reduced
+     * to the game map at the new position after moving. The energy level of the player is reduced
      * by one after each valid movement.
      * <p>
      * The F6 key is used for debugging purposes to reveal the map even the map is previously covered.
