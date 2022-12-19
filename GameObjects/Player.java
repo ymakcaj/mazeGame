@@ -49,4 +49,57 @@ public class Player extends GameObject implements Movable {
     public void reduceEnergyLevelBy(int value) {
         energyLevel -= value;
     }
+
+    /**
+     * Returns <code>true</code> if this Player object's {@link #energyLevel} is less than or equals to zero.
+     *
+     * @return <code>true</code> if {@link #energyLevel} is less than or equals to zero, <code>false</code> otherwise
+     */
+    public boolean isAsleep() {
+        return energyLevel <= 0;
+    }
+
+    /**
+     * Returns <code>true</code> if the player has reached a torch yet
+     *
+     * @return <code>true</code> if the player has torch, <code>false</code> otherwise
+     */
+    public boolean hasTorch() {
+        return hasTorch;
+    }
+
+    /**
+     * Sets {@link #hasTorch} to <code>true</code> and increase this Player's' {@link #visibility}.
+     */
+    public void foundTorch() {
+        hasTorch = true;
+        visibility += Torch.VISIBILITY_BOOST;
+    }
+
+    /**
+     * Changes this Player object's Position based on the specified direction
+     *
+     * @param direction the direction to move in integer
+     */
+    @Override
+    public void move(int direction) {
+        switch (direction) {
+            case DIRECTION_UP:
+                this.setY(this.getY() - 2);
+                break;
+            case DIRECTION_DOWN:
+                this.setY(this.getY() + 2);
+                break;
+            case DIRECTION_LEFT:
+                this.setX(this.getX() - 4);
+                break;
+            case DIRECTION_RIGHT:
+                this.setX(this.getX() + 4);
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }
