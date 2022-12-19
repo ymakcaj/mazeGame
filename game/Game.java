@@ -14,6 +14,13 @@ import java.util.Scanner;
  * The player wins by completing both levels.
  */
 
- public class Game implements ProgressListener {
-    
+ public class Game implements ProgressLister {
+
+    static boolean isVisibilityMode = true;
+    private JFrame jFrame;
+    private GameMap gameMap;
+    private Player player;
+    private Display display;
+    private LevelOne levelOne;
+    private LevelTwo levelTwo;
  }
