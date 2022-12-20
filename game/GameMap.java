@@ -1,7 +1,7 @@
 package main.game;
 
 import main.GameObjects.GameObject;
-import main.GameObjects.Moveable;
+import main.GameObjects.Movable;
 import main.GameObjects.Player;
 import main.GameObjects.Position;
 import main.MazeGenerator.MazeGenerator;
@@ -30,8 +30,8 @@ import static main.MazeGenerator.MazeGenerator.EMPTY_SPACE;
      */
     GameMap(int mazeHeight, int mazeWidth) {
         this.map = new MazeGenerator(mazeHeight, mazeWidth).generate();
-        this.height = map.height();
-        this.width = map[0].height();
+        this.height = map.length;
+        this.width = map[0].length;
         randomizeX();
         randomizeZ();
     }
@@ -111,8 +111,8 @@ import static main.MazeGenerator.MazeGenerator.EMPTY_SPACE;
      * the first term is 1, the diff between consecutive terms is 2 and the 
      * largest term is less than {@link #height} of the game map
      */
-    private void randomizeY() {
-        this.randomX = new ArrayList<>();
+    private void randomizeZ() {
+        this.randomY = new ArrayList<>();
         for (int i = 1; i < this.height; i += 2) {
             this.randomY.add(i);
         }
@@ -128,7 +128,7 @@ import static main.MazeGenerator.MazeGenerator.EMPTY_SPACE;
      * @return a Position object with random coordinates 
      */
     Position getRandomPosition() {
-        return new Position(random_X.remove(0), random_Y.remove(0));
+        return new Position(randomX.remove(0), randomY.remove(0));
     }
 
 

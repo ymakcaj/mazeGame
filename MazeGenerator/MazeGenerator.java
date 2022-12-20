@@ -55,7 +55,7 @@ import java.util.Random;
             int nRow = (direction == UP) ? row - 1 : (direction == DOWN) ? row + 1 : row;
             int nColumn = (direction == LEFT) ? column - 1 : (direction == RIGHT) ? column + 1 : column;
 
-            if (!isVisited[nRow][nColumnn]) {
+            if (!isVisited[nRow][nColumn]) {
                 carveWall(row, column, direction);
                 isVisited[nRow][nColumn] = true;
                 remainingBlocks--;

@@ -1,4 +1,4 @@
-package main.game_objects;
+package main.GameObjects;
 
 /**
  * GameObject is the abstract base class for all game objects.

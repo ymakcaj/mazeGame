@@ -1,6 +1,6 @@
 package main.GameObjects;
 
-import main.game_objects.GameObject;
+import main.GameObjects.GameObject;
 
 /*
  * a class for the Key object

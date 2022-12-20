@@ -36,6 +36,19 @@ import java.util.ArrayList;
      * @param display the {@link Display} object
      */
 
+
+     LevelOne(GameMap gameMap, Player player, Display display) {
+        this.gameMap = gameMap;
+        this.player = player;
+        this.display = display;
+        init();
+    }
+
+    /**
+     * Adds the specified progress listener.
+     *
+     * @param progressListener the progress listener
+     */
      void addProgressListener(ProgressListener progressListener) {
         this.progressListener = progressListener;
     }

@@ -14,7 +14,7 @@ import java.util.Scanner;
  * The player wins by completing both levels.
  */
 
- public class Game implements ProgressLister {
+ public class Game implements ProgressListener {
 
     static boolean isVisibilityMode = true;
     private JFrame jFrame;
@@ -59,7 +59,7 @@ import java.util.Scanner;
         } while (mazeWidth < 5);
 
         gameMap = new GameMap(mazeHeight, mazeWidth);
-        player = new Player(gameMap.getRandomPosition);
+        player = new Player(gameMap.getRandomPosition());
         display = new Display(gameMap.getMap(), player);
         display.gameIntroMessage();
     }

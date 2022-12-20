@@ -7,13 +7,13 @@ package main.GameObjects;
 public class Player extends GameObject implements Movable {
 
     public static final int INITIAL_ENERGY_LEVEL = 250;
-    private static final char DEFAULT_ICON = 'P';
+    private static final char DEFAULT_ICON = 'R';
     private static final int INITIAL_VISIBILITY = 2;
     private int visibility;
     private int energyLevel;
     private boolean hasTorch;
 
-        /**
+    /**
      * @param position the {@link Position} of this game object
      */
     public Player(Position position) {
