@@ -204,17 +204,17 @@ class Display {
     void gameIntroMessage() {
         clearScreen();
         String[] intros = {"Hello Marcy and Isaac!\n\n",
-                "Rufus, 'R', the maze runner, is trapped in a snowy maze.\n\n",
+                "Rufus, 'R', the maze cat, is trapped in a snowy maze.\n\n",
                 "To escape from the maze, he must find all the keys, 'K', that are scattered in the maze.\n",
                 "After collecting all the keys, the exit, 'E', will appear at the corner of the maze.\n\n",
-                "Rufus's visibility is very limited due to the heavy snow, '*', he couldn't see beyond two steps.\n",
+                "Rufus finds it hard to see through all the snow - he can't see beyond two steps.\n",
                 "However, there's a torch, '%', hidden somewhere in the maze. It could help to boost Rufus' visibility.\n\n",
-                "And of course, Rufus is just a normal kitten, he couldn't see or walk through the maze walls.\n",
-                "Every movement will cost Rufus a drop of energy. He's eaten a lot of Turkey, so he might fall asleep!\n",
+                "And of course, Rufus is just a normal kitten, he can't see or walk through the maze walls.\n",
+                "Every movement will cost Rufus energy. He's eaten a lot of turkey, so he might fall asleep!\n",
                 "So make your move wisely! (Press the arrow keys to move).\n\n",
                 "Press ENTER to continue... "};
             for (String intro : intros) {
-                printWithDelay(intro, 40);
+                printWithDelay(intro, 80);
                 delay(500);
             }
             // we wait for the player to hit enter
@@ -292,7 +292,7 @@ class Display {
      * out of bounds
      */
     void invalidMovementMessage() {
-        System.out.println("Rufus can't jump over the wall of the maze!");
+        System.out.println("Rufus can't jump over the wall of the maze after eating all that Turkey!");
     }
 
     /*
