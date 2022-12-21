@@ -73,7 +73,9 @@ import java.util.Scanner;
         gameMap = new GameMap(mazeHeight, mazeWidth);
         player = new Player(gameMap.getRandomPosition());
         display = new Display(gameMap.getMap(), player);
-        if (newGame.equals('n')) {
+
+        
+        if (newGame.equals("n")) {
             display.gameIntroMessage();
         } else {
             display.gameIntroMessageRepeat();
