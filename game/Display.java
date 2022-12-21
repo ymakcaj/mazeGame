@@ -208,7 +208,7 @@ class Display {
                 "To escape from the maze, he must find all the keys, 'K', that are scattered in the maze.\n",
                 "After collecting all the keys, the exit, 'E', will appear at the corner of the maze.\n\n",
                 "Rufus finds it hard to see through all the snow - he can't see beyond two steps.\n",
-                "However, there's a torch, '%', hidden somewhere in the maze. It could help to boost Rufus' visibility.\n\n",
+                "However, there's a torch, '%', hidden somewhere in the maze. It could help Rufus to see.\n\n",
                 "And of course, Rufus is just a normal kitten, he can't see or walk through the maze walls.\n",
                 "Every movement will cost Rufus energy. He's eaten a lot of turkey, so he might fall asleep!\n",
                 "So make your move wisely! (Press the arrow keys to move).\n\n",
@@ -223,6 +223,12 @@ class Display {
             do {
                 input = s.nextLine();
             } while (!input.equals(""));
+    }
+
+    void gameIntroMessageRepeat() {
+        clearScreen();
+        delay(500);
+        System.out.println("Starting the game...");
     }
     
     /*
@@ -282,7 +288,7 @@ class Display {
         delay(500);
         printWithDelay("BUT...\nWE'RE NOT DONE YET...", 80);
         delay(800);
-        printWithDelay("\nFIND THE EXIT BEFORE YOUR ENERGY BECOMES ZERO AND RUFUS FALLS ASLEEP!", 70);
+        printWithDelay("\nFIND THE EXIT BEFORE RUFUS FALLS ASLEEP!", 70);
         delay(1000);
         Game.isVisibilityMode = true;
     }
@@ -292,7 +298,7 @@ class Display {
      * out of bounds
      */
     void invalidMovementMessage() {
-        System.out.println("Rufus can't jump over the wall of the maze after eating all that Turkey!");
+        System.out.println("Rufus can't jump over the wall of the maze after eating all that turkey!");
     }
 
     /*
