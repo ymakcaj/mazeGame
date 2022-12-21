@@ -41,6 +41,18 @@ import java.util.Scanner;
     private void init() {
         Scanner s = new Scanner(System.in);
         int mazeHeight, mazeWidth;
+        String newGame;
+        do {
+            System.out.println("Have you played this game before? Answer y for yes, and n for no.");
+            while (!s.hasNext()) {
+                System.out.println("That's not right! Try again: ");
+                s.next();
+            }
+            newGame = s.next();
+            break;
+        } while ((!s.next().equals("y")) && (!s.next().equals("n")));
+
+
         do {
             System.out.println("Enter maze height (min 5): ");
             while (!s.hasNextInt()) {
@@ -61,7 +73,12 @@ import java.util.Scanner;
         gameMap = new GameMap(mazeHeight, mazeWidth);
         player = new Player(gameMap.getRandomPosition());
         display = new Display(gameMap.getMap(), player);
-        display.gameIntroMessage();
+        if (newGame.equals('n')) {
+            display.gameIntroMessage();
+        } else {
+            display.gameIntroMessageRepeat();
+        }
+        
     }
 
     /*
